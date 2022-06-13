@@ -43,23 +43,24 @@ const renderHelloWorldImage = () => {
 }
 
 const renderWebsiteStatus = (url, isActive) => {
-    const canvas = createCanvas(200, 56);
+    const canvas = createCanvas(200, 80);
     const ctx = canvas.getContext('2d');
     ctx.font = '24px sans-serif';
-    ctx.canvas.width  = ctx.measureText(url).width + 112;
+    ctx.canvas.width  = ctx.measureText(url).width + 96;
     ctx.fillStyle = isActive ? "#7cd992" : "#eb6060";
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.fillStyle = '#ffffff';
     ctx.font = '24px sans-serif';
-    ctx.fillText(url, 80, 24);
+    ctx.fillText(url, 80, 36);
     ctx.font = '16px sans-serif';
-    ctx.fillText(isActive ? 'Online' : 'Offline', 80, 48);
+    ctx.fillText(isActive ? 'Online' : 'Offline', 80, 60);
     ctx.strokeStyle = '#ffffff';
     ctx.beginPath();
     ctx.lineWidth = 2;
-    var x = 16 + ctx.canvas.height / 2;
+    var x = ctx.canvas.height / 2;
     var y = ctx.canvas.height / 2
-    ctx.arc(x, y, (ctx.canvas.height - 16) / 2, 0, 2 * Math.PI);
+    var r = (ctx.canvas.height - 40) / 2
+    ctx.arc(x, y, r, 0, 2 * Math.PI);
     ctx.stroke(); 
     if (isActive) {
         ctx.beginPath();
