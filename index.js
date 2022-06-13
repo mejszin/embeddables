@@ -22,7 +22,7 @@ app.get('/helloworld', (req, res) => {
     const canvas = createCanvas(200, 200)
     const ctx = canvas.getContext('2d')
     // Write "Awesome!"
-    ctx.font = '30px Impact'
+    ctx.font = '30px'
     ctx.rotate(0.1)
     ctx.fillText('Hello world!', 40, 100)
     // Draw line under text
