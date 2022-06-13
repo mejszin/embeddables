@@ -18,21 +18,22 @@ app.get('/ping', (req, res) => {
     res.status(200).send('Pong!');
 });
 
+const renderHelloWorldImage = () => {
+    const canvas = createCanvas(200, 200);
+    const ctx = canvas.getContext('2d');
+    ctx.font = '24px serif';
+    ctx.rotate(0.3);
+    ctx.fillText('Hello world!', 50, 70);
+    ctx.strokeStyle = 'rgba(0,0,0,0.5)';
+    ctx.beginPath();
+    ctx.lineTo(50, 80);
+    ctx.lineTo(50 + ctx.measureText('Hello world!').width, 80);
+    ctx.stroke();
+    return canvas;
+}
+
 app.get('/helloworld', (req, res) => {
-    const canvas = createCanvas(200, 200)
-    const ctx = canvas.getContext('2d')
-    // Write "Awesome!"
-    ctx.font = '24px serif'
-    ctx.rotate(0.3)
-    ctx.fillText('Hello world!', 50, 70)
-    // Draw line under text
-    var text = ctx.measureText('Awesome!')
-    ctx.strokeStyle = 'rgba(0,0,0,0.5)'
-    ctx.beginPath()
-    ctx.lineTo(50, 80)
-    ctx.lineTo(75 + text.width, 80)
-    ctx.stroke()
-    // Create outputs
+    var canvas = renderHelloWorldImage();
     var img = Buffer.from(canvas.toBuffer(), 'base64');
     res.writeHead(200, {
       'Content-Type': 'image/png',
