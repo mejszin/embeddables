@@ -19,6 +19,15 @@ app.get('/ping', (req, res) => {
     res.status(200).send('Pong!');
 });
 
+const sendCanvasAsResponse = (canvas, res) => {
+    var img = Buffer.from(canvas.toBuffer(), 'base64');
+    res.writeHead(200, {
+      'Content-Type': 'image/png',
+      'Content-Length': img.length
+    });
+    res.end(img);
+};
+
 const renderHelloWorldImage = () => {
     const canvas = createCanvas(200, 200);
     const ctx = canvas.getContext('2d');
@@ -33,25 +42,28 @@ const renderHelloWorldImage = () => {
     return canvas;
 }
 
+const renderWebsiteStatus = (url, isActive) => {
+    const canvas = createCanvas(200, 56);
+    const ctx = canvas.getContext('2d');
+    ctx.font = '24px serif';
+    ctx.canvas.width  = ctx.measureText(url).width + 32;
+    ctx.font = '24px serif';
+    ctx.fillText(url, 16, 24);
+    ctx.font = '16px serif';
+    ctx.fillStyle = isActive ? "#7cd992" : "#eb6060";
+    ctx.fillText(isActive ? 'Online' : 'Offline', 16, 48);
+    return canvas;
+}
+
 app.get('/helloworld', (req, res) => {
-    var canvas = renderHelloWorldImage();
-    var img = Buffer.from(canvas.toBuffer(), 'base64');
-    res.writeHead(200, {
-      'Content-Type': 'image/png',
-      'Content-Length': img.length
-    });
-    res.end(img);
+    sendCanvasAsResponse(renderHelloWorldImage(), res)
 });
 
 app.get('/status/website', (req, res) => {
     const { url } = req.query;
-    ping.promise.probe(url).then(function (pingRes) {
-        res.status(200).send(pingRes);
+    ping.sys.probe(url, function(isAlive){
+        sendCanvasAsResponse(renderWebsiteStatus(url, isAlive), res)
     });
-    //ping.sys.probe(url, function(isAlive){
-    //    var msg = isAlive ? 'host ' + url + ' is alive' : 'host ' + url + ' is dead';
-    //    res.status(200).send(msg);
-    //});
 })
 
 app.listen(PORT, () => console.log(`It's alive on port ${PORT}!`));
