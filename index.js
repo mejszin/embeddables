@@ -45,11 +45,11 @@ const renderHelloWorldImage = () => {
 const renderWebsiteStatus = (url, isActive) => {
     const canvas = createCanvas(200, 56);
     const ctx = canvas.getContext('2d');
-    ctx.font = '24px serif';
+    ctx.font = '24px sans-serif';
     ctx.canvas.width  = ctx.measureText(url).width + 32;
-    ctx.font = '24px serif';
+    ctx.font = '24px sans-serif';
     ctx.fillText(url, 16, 24);
-    ctx.font = '16px serif';
+    ctx.font = '16px sans-serif';
     ctx.fillStyle = isActive ? "#7cd992" : "#eb6060";
     ctx.fillText(isActive ? 'Online' : 'Offline', 16, 48);
     return canvas;
