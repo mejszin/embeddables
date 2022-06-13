@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 var bodyParser = require('body-parser');
 
-const { createCanvas, loadImage } = require('canvas')
+const { createCanvas } = require('canvas')
+var ping = require('ping');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -41,5 +42,16 @@ app.get('/helloworld', (req, res) => {
     });
     res.end(img);
 });
+
+app.get('/status/website', (req, res) => {
+    const { url } = req.query;
+    ping.promise.probe(url).then(function (pingRes) {
+        res.status(200).send(pingRes);
+    });
+    //ping.sys.probe(url, function(isAlive){
+    //    var msg = isAlive ? 'host ' + url + ' is alive' : 'host ' + url + ' is dead';
+    //    res.status(200).send(msg);
+    //});
+})
 
 app.listen(PORT, () => console.log(`It's alive on port ${PORT}!`));
