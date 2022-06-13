@@ -58,8 +58,8 @@ const renderWebsiteStatus = (url, isActive) => {
     ctx.beginPath();
     ctx.lineWidth = 2;
     var x = ctx.canvas.height / 2;
-    var y = ctx.canvas.height / 2
-    var r = (ctx.canvas.height - 40) / 2
+    var y = ctx.canvas.height / 2;
+    var r = (ctx.canvas.height - 40) / 2;
     ctx.arc(x, y, r, 0, 2 * Math.PI);
     ctx.stroke(); 
     if (isActive) {
@@ -85,14 +85,21 @@ const renderWebsiteStatus = (url, isActive) => {
     return canvas;
 }
 
-app.get('/helloworld', (req, res) => {
+app.get('/image/hello', (req, res) => {
     sendCanvasAsResponse(renderHelloWorldImage(), res)
 });
 
-app.get('/status/website', (req, res) => {
+app.get('/image/ping', (req, res) => {
     const { url } = req.query;
     ping.sys.probe(url, function(isAlive){
         sendCanvasAsResponse(renderWebsiteStatus(url, isAlive), res)
+    });
+})
+
+app.get('/text/ping', (req, res) => {
+    const { url } = req.query;
+    ping.sys.probe(url, function(isAlive){
+        res.status(200).send([url, isAlive ? 'Online' : 'Offline']);
     });
 })
 
