@@ -22,15 +22,15 @@ app.get('/helloworld', (req, res) => {
     const canvas = createCanvas(200, 200)
     const ctx = canvas.getContext('2d')
     // Write "Awesome!"
-    ctx.font = '30px'
-    ctx.rotate(0.1)
-    ctx.fillText('Hello world!', 40, 100)
+    ctx.font = '24px serif'
+    ctx.rotate(0.3)
+    ctx.fillText('Hello world!', 50, 70)
     // Draw line under text
     var text = ctx.measureText('Awesome!')
     ctx.strokeStyle = 'rgba(0,0,0,0.5)'
     ctx.beginPath()
-    ctx.lineTo(50, 102)
-    ctx.lineTo(50 + text.width, 102)
+    ctx.lineTo(50, 80)
+    ctx.lineTo(75 + text.width, 80)
     ctx.stroke()
     // Create outputs
     var img = Buffer.from(canvas.toBuffer(), 'base64');
