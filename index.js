@@ -46,12 +46,41 @@ const renderWebsiteStatus = (url, isActive) => {
     const canvas = createCanvas(200, 56);
     const ctx = canvas.getContext('2d');
     ctx.font = '24px sans-serif';
-    ctx.canvas.width  = ctx.measureText(url).width + 32;
-    ctx.font = '24px sans-serif';
-    ctx.fillText(url, 16, 24);
-    ctx.font = '16px sans-serif';
+    ctx.canvas.width  = ctx.measureText(url).width + 112;
     ctx.fillStyle = isActive ? "#7cd992" : "#eb6060";
-    ctx.fillText(isActive ? 'Online' : 'Offline', 16, 48);
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '24px sans-serif';
+    ctx.fillText(url, 80, 24);
+    ctx.font = '16px sans-serif';
+    ctx.fillText(isActive ? 'Online' : 'Offline', 80, 48);
+    ctx.strokeStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.lineWidth = 2;
+    var x = 16 + ctx.canvas.height / 2;
+    var y = ctx.canvas.height / 2
+    ctx.arc(x, y, (ctx.canvas.height - 16) / 2, 0, 2 * Math.PI);
+    ctx.stroke(); 
+    if (isActive) {
+        ctx.beginPath();
+        ctx.lineTo(x - 12, y + 2);
+        ctx.lineTo(x - 4, y + 10);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.lineTo(x - 4, y + 10);
+        ctx.lineTo(x + 10, y - 8);
+        ctx.stroke();
+
+    } else {
+        ctx.beginPath();
+        ctx.lineTo(x - 8, y - 8);
+        ctx.lineTo(x + 8, y + 8);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.lineTo(x - 8, y + 8);
+        ctx.lineTo(x + 8, y - 8);
+        ctx.stroke();
+    }
     return canvas;
 }
 
