@@ -1,3 +1,5 @@
+var ping = require('ping');
+
 module.exports = function(app, methods) {
     app.get('/text/ping', (req, res) => {
         const { url } = req.query;
