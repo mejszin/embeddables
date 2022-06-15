@@ -49,6 +49,7 @@ require('./renders/string.js')(app, methods);
 
 require('./routes/image.js')(app, methods);
 require('./routes/text.js')(app, methods);
+require('./routes/user.js')(app, methods);
 
 app.get('/ping', (req, res) => {
     res.status(200).send('Pong!');

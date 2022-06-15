@@ -6,6 +6,10 @@ module.exports = function(methods) {
     methods.isUser = (token) => {
         return ((token != null) && (token != undefined) && (token in user_data));
     }
+
+    methods.validKey = (key) => {
+        return ((key != undefined) && (key != null));
+    }
     
     methods.newToken = () => {
         var novel = false;
@@ -36,15 +40,19 @@ module.exports = function(methods) {
     }
     
     methods.getUserVar = (token, key) => {
-        if (methods.isUser(token)) {
+        if (methods.isUser(token) && methods.validKey(key)) {
             return user_data[token].vars[key];
+        } else {
+            return null;
         }
     }
     
     methods.deleteUserVar = (token, key) => {
-        if (methods.isUser(token)) {
+        if (methods.isUser(token) && methods.validKey(key) && (key in user[token].vars)) {
             delete user_data[token].vars[key];
+            return true;
         }
+        return false;
     }
     
     methods.writeUsers = () => {
