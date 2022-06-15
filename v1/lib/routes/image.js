@@ -1,5 +1,5 @@
 var ping = require('ping');
-const axios = require('axios');
+const request = require('request');
 
 module.exports = function(app, methods) {
     app.get('/image/hello', (req, res) => {
@@ -29,9 +29,12 @@ module.exports = function(app, methods) {
         const r_message = methods.resolveString(message, token);
         const r_color = methods.resolveString(color, token);
         var url = encodeURI(`https://img.shields.io/badge/${r_label}-${r_message}-${r_color}.png`);
-        axios.get(url).then((response) => {
-            res.setHeader("Content-Type", "image/png")
-            res.status(200).send(response.status == '200' ? response.data : '');
+        console.log(url);
+        request({ url: url, encoding: null }, (error, response, buffer) => {
+            if ((!error) && (response.statusCode === 200)){
+                res.set("Content-Type", "image/png");
+                res.send(response.body);
+            }
         });
     })
 }
