@@ -28,9 +28,9 @@ module.exports = function(app, methods) {
         const r_label = methods.resolveString(label, token);
         const r_message = methods.resolveString(message, token);
         const r_color = methods.resolveString(color, token);
-        var url = encodeURI(`https://img.shields.io/badge/${r_label}-${r_message}-${r_color}`);
+        var url = encodeURI(`https://img.shields.io/badge/${r_label}-${r_message}-${r_color}.png`);
         axios.get(url).then((response) => {
-            res.setHeader("Content-Type", "image/svg+xml")
+            res.setHeader("Content-Type", "image/png")
             res.status(200).send(response.status == '200' ? response.data : '');
         });
     })
