@@ -62,10 +62,12 @@ module.exports = function(methods) {
     methods.resolveString = (str, token = null) => {
         if (methods.isUser(token)) {
             const found = str.match(/\$\w+/g);
-            found.forEach ((before) => {
-                var after = methods.getUserVar(token, before.slice(1));
-                if (after != undefined) { str = str.replace(before, after) };
-            });
+            if (found != null) {
+                found.forEach ((before) => {
+                    var after = methods.getUserVar(token, before.slice(1));
+                    if (after != undefined) { str = str.replace(before, after) };
+                });
+            }
             return str;
         } else {
             return str;
