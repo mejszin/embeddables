@@ -5,16 +5,13 @@
     <title>embeddabl.es</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./css/bulma.css" />
+    <link rel="stylesheet" type="text/css" href="./css/bulma-divider.min.css" />
 </head>
 
 <style>
     body {
-        display: flex;
-        width: 100vw;
-        height: 100vh;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
+        overflow-x: hidden;
     }
 
     .carton {
@@ -23,7 +20,104 @@
 </style>
 
 <body>
-    <img class="lo" src="./logo.svg">
+    <div class="m-6 px-6">
+        <div class="content block">
+            <h1 style="font-size: 3em">embeddabl.es</h1>
+            <p>This is a simple API service to request dynamic images and text. These can be used to embed anywhere that supports it, or for websites and other means. If you have any requests for embeds, let me know at <b>louis@machin.dev</b>.</p>
+            <p>This service is currently free and public while it can be supported as such.</p>
+        </div>
+        <div class="content block">
+            <div class="is-divider"></div>
+            <h3>Contents</h3>
+        </div>
+        <div class="block columns">
+            <div class="column is-narrow">
+                <aside class="menu">
+                    <p class="menu-label">
+                        User variables
+                    </p>
+                    <ul class="menu-list">
+                        <li><a href="#user_create">Creating a user</a></li>
+                        <li><a href="#user_set">Setting variables</a></li>
+                        <li><a href="#user_get">Getting variables</a></li>
+                        <li><a href="#user_delete">Deleting variables</a></li>
+                    </ul>
+                </aside>
+            </div>
+            <div class="column is-narrow">
+                <aside class="menu">
+                    <p class="menu-label">
+                        Image embeds
+                    </p>
+                    <ul class="menu-list">
+                        <li><a>Badge</a></li>
+                        <li><a>Ping</a></li>
+                        <li><a>String</a></li>
+                        <li><a>Weather</a></li>
+                    </ul>
+                </aside>
+            </div>
+            <div class="column is-narrow">
+                <aside class="menu">
+                    <p class="menu-label">
+                        Text embeds
+                    </p>
+                    <ul class="menu-list">
+                        <li><a>Ping</a></li>
+                        <li><a>Weather</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </div>
+        <div class="content block">
+            <!-- User variables -->
+            <div class="is-divider"></div>
+            <h3>User variables</h3>
+            <p>To make your embeds more dynamic, the use of variables that you can set at any time is really useful. There is currently no validation for users so please do not use any sensitive data, and keep your token private.</p>
+            <!-- /user/create -->
+            <div class="is-divider"></div>
+            <h4 id="user_create">Creating a user</h4>
+            <h6>Request:</h6>
+            <pre>/user/create</pre>
+            <p><b>Note:</b> Any query parameters given will be used to initialize user variables object.</p>
+            <h6>Response:</h6>
+            <pre>{<br>&nbsp;&nbsp;"token": &lt;token&gt;<br>}</pre>
+            <h6>Example:</h6>
+            <pre>https://embeddabl.es/v1/user/create?alias=Louis</pre>
+            <!-- /user/set -->
+            <div class="is-divider"></div>
+            <h4 id="user_set">Setting variables</h4>
+            <h6>Request:</h6>
+            <pre>/user/set?token={token}</pre>
+            <p>Any query parameters given, excluding <b><code>token</code></b>, will be set to the user variables object.</p>
+            <h6>Response:</h6>
+            <pre>{<br>&nbsp;&nbsp;"success": &lt;boolean&gt;<br>}</pre>
+            <h6>Example:</h6>
+            <pre>https://embeddabl.es/v1/user/set?token=eXaMPl3s&my_state=finished</pre>
+            <!-- /user/get -->
+            <div class="is-divider"></div>
+            <h4 id="user_get">Getting variables</h4>
+            <h6>Request:</h6>
+            <pre>/user/get?token={token}&key={variable}</pre>
+            <p>The key is the name of the variable you are requesting.</p>
+            <h6>Response:</h6>
+            <pre>{<br>&nbsp;&nbsp;key: &lt;value&gt;<br>}</pre>
+            <h6>Example:</h6>
+            <pre>https://embeddabl.es/v1/user/get?token=eXaMPl3s&key=alias</pre>
+            <pre>{<br>&nbsp;&nbsp;"alias": "Louis"<br>}</pre>
+            <!-- /user/delete -->
+            <div class="is-divider"></div>
+            <h4 id="user_delete">Deleting variables</h4>
+            <h6>Request:</h6>
+            <pre>/user/delete?token={token}&key={variable}</pre>
+            <p>The key is the name of the variable you are deleting.</p>
+            <h6>Response:</h6>
+            <pre>{<br>&nbsp;&nbsp;"success": &lt;boolean&gt;<br>}</pre>
+            <h6>Example:</h6>
+            <pre>https://embeddabl.es/v1/user/set?token=eXaMPl3s&key=alias</pre>
+        </div>
+    </div>
 </body>
 
 </html>
+
