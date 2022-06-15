@@ -54,6 +54,14 @@ module.exports = function(methods) {
         }
         return false;
     }
+
+    methods.getUserVars = (token) => {
+        if (methods.isUser(token)) {
+            return user_data[token].vars;
+        } else {
+            return {};
+        }
+    }
     
     methods.writeUsers = () => {
         fs.writeFileSync(user_data_path, JSON.stringify(user_data));

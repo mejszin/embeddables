@@ -41,9 +41,15 @@ module.exports = function(app, methods) {
                 [key]: value
             });
         } else {
-            res.status(200).send({
-                "success": false
-            });
+            if (methods.isUser(token)) {
+                var data = methods.getUserVars(token);
+                data.success = true;
+                res.status(200).send(data);
+            } else {
+                res.status(200).send({
+                    "success": false
+                });
+            }
         }
     })
 
