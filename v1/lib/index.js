@@ -43,6 +43,7 @@ require('./users.js')(methods);
 
 require('./renders/helpers.js')(app, methods);
 require('./renders/helloworld.js')(app, methods);
+require('./renders/color.js')(app, methods);
 require('./renders/ping.js')(app, methods);
 require('./renders/time.js')(app, methods);
 require('./renders/string.js')(app, methods);

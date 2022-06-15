@@ -6,10 +6,17 @@ module.exports = function(app, methods) {
         methods.sendCanvasAsResponse(methods.renderHelloWorldImage(), res)
     });
 
+    app.get('/image/color', (req, res) => {
+        const { token, color, text } = req.query;
+        var r_text = methods.resolveString(text, token);
+        var r_color = methods.resolveString(color, token);
+        methods.sendCanvasAsResponse(methods.renderColorImage(r_color, r_text), res);
+    })
+
     app.get('/image/string', (req, res) => {
-        const { str, token } = req.query;
-        var text = methods.resolveString(str, token);
-        methods.sendCanvasAsResponse(methods.renderStringImage(text), res);
+        const { text, token } = req.query;
+        var r_text = methods.resolveString(text, token);
+        methods.sendCanvasAsResponse(methods.renderStringImage(r_text), res);
     })
     
     app.get('/image/time', (req, res) => {
