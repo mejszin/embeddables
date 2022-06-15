@@ -1,12 +1,16 @@
 module.exports = function(app, methods) {
     app.get('/user/token', (req, res) => {
         var token = methods.newToken();
-        res.status(200).send(token);
+        res.status(200).send({
+            "token": token
+        });
     })
 
     app.get('/user/new', (req, res) => {
         var token = methods.newUser(req.query);
-        res.status(200).send(token);
+        res.status(200).send({
+            "token": token
+        });
     })
 
     app.get('/user/set', (req, res) => {
@@ -18,19 +22,28 @@ module.exports = function(app, methods) {
                 }
             }
             methods.writeUsers()
-            res.status(200).send();
+            res.status(200).send({
+                "success": true
+            });
         } else {
-            res.status(204).send();
+            res.status(200).send({
+                "success": false
+            });
         }
     })
 
     app.get('/user/get', (req, res) => {
         const { token, key } = req.query;
-        if (methods.isUser(token)) {
+        if (methods.isUser(token) && methods.validKey(key)) {
             var value = methods.getUserVar(token, key);
-            res.status(200).send(value);
+            res.status(200).send({
+                "success": true,
+                [key]: value
+            });
         } else {
-            res.status(204).send();
+            res.status(200).send({
+                "success": false
+            });
         }
     })
 
@@ -39,9 +52,13 @@ module.exports = function(app, methods) {
         if (methods.isUser(token)) {
             var bool = methods.deleteUserVar(token, key);
             if (bool) { methods.writeUsers() }
-            res.status(200).send(bool);
+            res.status(200).send({
+                "success": bool
+            });
         } else {
-            res.status(204).send();
+            res.status(200).send({
+                "success": false
+            });
         }
     })
 }
